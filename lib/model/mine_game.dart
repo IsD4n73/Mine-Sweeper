@@ -3,11 +3,11 @@ import 'dart:math';
 class MineSweeper {
   static int row = 10;
   static int col = 10;
-  static int cells = row * col;
+  int cells = row * col;
   bool gameOver = false;
   List<Cell> gameMap = [];
 
-  static List<List<dynamic>> map = List.generate(
+  List<List<dynamic>> map = List.generate(
     row,
     (x) => List.generate(
       col,
@@ -26,7 +26,7 @@ class MineSweeper {
   }
 
   // Create Mine
-  static void placeMine(int mineNumber) {
+  void placeMine(int mineNumber) {
     Random random = Random();
     for (int i = 0; i < mineNumber; i++) {
       int mineRow = random.nextInt(row);

@@ -3,7 +3,8 @@ import "dart:async";
 import "package:flutter/material.dart";
 import "package:mine_sweeper/common/colors.dart";
 import "package:mine_sweeper/controller/timer_utils.dart";
-import "package:mine_sweeper/model/mine_game.dart";
+import 'package:mine_sweeper/model/mine_game.dart';
+import "package:mine_sweeper/pages/settings.dart";
 
 import "../widgets/info_banner.dart";
 
@@ -39,7 +40,19 @@ class _GameScreenState extends State<GameScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              //todo open settings
+              setState(() {
+                secondTime = 0;
+                timer.cancel();
+
+                game.resetGame();
+                game.gameOver = false;
+              });
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SettingsPage(),
+                ),
+              );
             },
             icon: const Icon(Icons.settings),
           ),
@@ -62,7 +75,7 @@ class _GameScreenState extends State<GameScreen> {
                   crossAxisSpacing: 5,
                   mainAxisSpacing: 5,
                 ),
-                itemCount: MineSweeper.cells,
+                itemCount: game.cells,
                 itemBuilder: (context, index) {
                   Color cellColor = game.gameMap[index].reveal
                       ? AppColor.clickedCard
