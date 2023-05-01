@@ -1,5 +1,4 @@
 import "package:chips_choice/chips_choice.dart";
-import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:mine_sweeper/controller/settings_controller.dart";
 import 'package:mine_sweeper/model/mine_game.dart';

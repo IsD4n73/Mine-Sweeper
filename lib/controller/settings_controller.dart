@@ -10,10 +10,10 @@ void saveGrid(int grid) async {
 Future<int> getGrid() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-  MineSweeper.col = prefs.getInt('MS-grid') ?? 5;
-  MineSweeper.row = prefs.getInt('MS-grid') ?? 5;
+  MineSweeper.col = prefs.getInt('MS-grid') ?? 6;
+  MineSweeper.row = prefs.getInt('MS-grid') ?? 6;
 
-  return prefs.getInt('MS-grid') ?? 5;
+  return prefs.getInt('MS-grid') ?? 6;
 }
 
 Future<bool> getAudio() async {
