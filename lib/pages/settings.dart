@@ -15,6 +15,7 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   int tag = 0;
+  bool audio = false;
 
   @override
   void initState() {
@@ -26,6 +27,12 @@ class _SettingsPageState extends State<SettingsPage> {
           tag = 1;
         });
       }
+    });
+
+    getAudio().then((value) {
+      setState(() {
+        audio = value;
+      });
     });
   }
 
@@ -91,6 +98,33 @@ class _SettingsPageState extends State<SettingsPage> {
                   label: (i, v) => v,
                 ),
               ),
+
+              const SizedBox(height: 20),
+              //! Audio !\\
+              const Text(
+                "AUDIO - SOUND",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                ),
+              ),
+              CheckboxListTile(
+                title: const Text(
+                  "Audio on click",
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                activeColor: AppColor.accent,
+                checkColor: Colors.white,
+                
+                value: audio,
+                onChanged: (newValue) {
+                  setState(() {
+                    audio = newValue!;
+                  });
+                },
+              )
             ],
           ),
         ),

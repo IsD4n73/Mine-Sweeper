@@ -11,3 +11,15 @@ Future<int> getGrid() async {
 
   return prefs.getInt('MS-grid') ?? 5;
 }
+
+Future<bool> getAudio() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  return prefs.getBool('MS-audio') ?? false;
+}
+
+void saveAudio(bool audio) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  await prefs.setBool('MS-audio', audio);
+}

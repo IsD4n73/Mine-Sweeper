@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mine_sweeper/common/colors.dart';
 import 'package:mine_sweeper/pages/game.dart';
 
 void main() {
@@ -12,7 +13,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Mine Sweeper',
-      theme: ThemeData(),
+      theme: ThemeData(
+        unselectedWidgetColor: AppColor.clickedCard,
+      ),
       home: const GameScreen(),
     );
   }

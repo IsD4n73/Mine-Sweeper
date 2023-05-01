@@ -7,6 +7,7 @@ import "package:mine_sweeper/controller/timer_utils.dart";
 import 'package:mine_sweeper/model/mine_game.dart';
 import "package:mine_sweeper/pages/settings.dart";
 
+import "../controller/settings_controller.dart";
 import "../widgets/info_banner.dart";
 
 class GameScreen extends StatefulWidget {
@@ -20,6 +21,7 @@ class _GameScreenState extends State<GameScreen> {
   MineSweeper game = MineSweeper();
   int secondTime = 0;
   bool isFirstMove = true;
+  bool playAudio = false;
   Timer timer = Timer(Duration.zero, () {});
 
   @override
@@ -27,6 +29,10 @@ class _GameScreenState extends State<GameScreen> {
     super.initState();
 
     game.generateMap();
+
+    getAudio().then((value) {
+      playAudio = value;
+    });
   }
 
   @override
@@ -95,15 +101,21 @@ class _GameScreenState extends State<GameScreen> {
                                       secondTime++;
                                     });
                                   });
-                                  AudioPlayer().play(AssetSource('assets/sounds/start.wav'));
+
                                   isFirstMove = false;
                                 }
                                 game.clickCell(game.gameMap[index]);
-                                AudioPlayer().play(AssetSource('assets/sounds/click.wav'));
+                                if (playAudio) {
+                                  AudioPlayer()
+                                      .play(AssetSource('sounds/click.wav'));
+                                }
 
                                 if (game.gameOver) {
                                   timer.cancel();
-                                  AudioPlayer().play(AssetSource('assets/sounds/end.wav'));
+                                  if (playAudio) {
+                                    AudioPlayer()
+                                        .play(AssetSource('sounds/lose.wav'));
+                                  }
                                 }
                               },
                             );
@@ -151,6 +163,10 @@ class _GameScreenState extends State<GameScreen> {
 
             RawMaterialButton(
               onPressed: () {
+                if (playAudio) {
+                  AudioPlayer().play(AssetSource('sounds/start.wav'));
+                }
+
                 setState(() {
                   secondTime = 0;
                   timer.cancel();
