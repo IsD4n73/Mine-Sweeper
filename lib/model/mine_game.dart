@@ -3,6 +3,7 @@ import 'dart:math';
 class MineSweeper {
   static int row = 10;
   static int col = 10;
+  static int mineCount = 10;
   int cells = row * col;
   bool gameOver = false;
   List<Cell> gameMap = [];
@@ -17,7 +18,7 @@ class MineSweeper {
 
   // Generae Map
   void generateMap() {
-    placeMine(10);
+    placeMine(mineCount);
     for (int i = 0; i < row; i++) {
       for (int j = 0; j < col; j++) {
         gameMap.add(map[i][j]);

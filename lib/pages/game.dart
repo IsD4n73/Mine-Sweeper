@@ -1,5 +1,6 @@
 import "dart:async";
 
+import "package:audioplayers/audioplayers.dart";
 import "package:flutter/material.dart";
 import "package:mine_sweeper/common/colors.dart";
 import "package:mine_sweeper/controller/timer_utils.dart";
@@ -94,12 +95,15 @@ class _GameScreenState extends State<GameScreen> {
                                       secondTime++;
                                     });
                                   });
+                                  AudioPlayer().play(AssetSource('assets/sounds/start.wav'));
                                   isFirstMove = false;
                                 }
                                 game.clickCell(game.gameMap[index]);
+                                AudioPlayer().play(AssetSource('assets/sounds/click.wav'));
 
                                 if (game.gameOver) {
                                   timer.cancel();
+                                  AudioPlayer().play(AssetSource('assets/sounds/end.wav'));
                                 }
                               },
                             );
