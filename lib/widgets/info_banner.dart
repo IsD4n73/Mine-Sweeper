@@ -3,36 +3,45 @@ import "package:flutter/material.dart";
 import "../common/colors.dart";
 
 class InfoBanner extends StatelessWidget {
-  const InfoBanner({super.key});
+  final String text;
+  final IconData icon;
+  const InfoBanner(this.text, this.icon, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 20),
-        padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
-        decoration: BoxDecoration(
-          color: AppColor.lightPrimary,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: Row(
-          children: [
-            Icon(
-              Icons.flag,
-              size: 34,
-              color: AppColor.accent,
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
+            
+            decoration: BoxDecoration(
+              color: AppColor.lightPrimary,
+              borderRadius: BorderRadius.circular(8),
             ),
-            const Text(
-              "10",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-              ),
-            )
-          ],
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  icon,
+                  size: 30,
+                  color: AppColor.accent,
+                ),
+                Text(
+                  text,
+                  overflow: TextOverflow.clip,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              ],
+            ),
+          ),
         ),
-      ),
+      ],
     );
   }
 }

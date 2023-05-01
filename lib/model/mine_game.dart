@@ -4,6 +4,7 @@ class MineSweeper {
   static int row = 6;
   static int col = 6;
   static int cells = row * col;
+  int remaningMine = 10;
   bool gameOver = false;
   List<Cell> gameMap = [];
 
@@ -45,7 +46,7 @@ class MineSweeper {
       ),
     );
     gameMap.clear();
-    //generateMap();
+    generateMap();
   }
 
   // Show Mines
