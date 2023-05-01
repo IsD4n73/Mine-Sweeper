@@ -18,7 +18,7 @@ class _GameScreenState extends State<GameScreen> {
   MineSweeper game = MineSweeper();
   int secondTime = 0;
   bool isFirstMove = true;
-  late Timer timer;
+  Timer timer = Timer(Duration.zero, () {});
 
   @override
   void initState() {
@@ -59,8 +59,8 @@ class _GameScreenState extends State<GameScreen> {
               child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: MineSweeper.row,
-                  crossAxisSpacing: 4,
-                  mainAxisSpacing: 4,
+                  crossAxisSpacing: 5,
+                  mainAxisSpacing: 5,
                 ),
                 itemCount: MineSweeper.cells,
                 itemBuilder: (context, index) {

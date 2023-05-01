@@ -8,7 +8,7 @@ class AppColor {
   static Color clickedCard = const Color(0xff818181);
 
   static List<Color> letterColors = [
-    Colors.white,
+    clickedCard,
     Colors.blue.shade100,
     Colors.greenAccent,
     Colors.green,
