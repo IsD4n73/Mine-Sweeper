@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mine_sweeper/pages/game.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,13 +10,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      //home: ,
+    return const MaterialApp(
+      title: 'Mine Sweeper',
+      home: GameScreen(),
     );
   }
 }
-
