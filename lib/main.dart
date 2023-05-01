@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:mine_sweeper/common/colors.dart';
+import 'package:mine_sweeper/controller/settings_controller.dart';
 import 'package:mine_sweeper/pages/game.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await getGrid();
+
   runApp(const MyApp());
 }
 

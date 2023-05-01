@@ -1,4 +1,5 @@
 import "package:chips_choice/chips_choice.dart";
+import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:mine_sweeper/controller/settings_controller.dart";
 import 'package:mine_sweeper/model/mine_game.dart';
@@ -74,10 +75,11 @@ class _SettingsPageState extends State<SettingsPage> {
                 value: tag,
                 onChanged: (val) {
                   if (val == 0) {
-                    saveGrid(5);
-                    MineSweeper.col = 5;
-                    MineSweeper.row = 5;
-                  } else {
+                    saveGrid(6);
+                    MineSweeper.col = 6;
+                    MineSweeper.row = 6;
+                  }
+                  if(val == 1){
                     saveGrid(10);
                     MineSweeper.col = 10;
                     MineSweeper.row = 10;
@@ -93,7 +95,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   color: Colors.white,
                 ),
                 choiceItems: C2Choice.listFrom<int, String>(
-                  source: ["5x5", "10x10"],
+                  source: ["6x6", "10x10"],
                   value: (i, v) => i,
                   label: (i, v) => v,
                 ),

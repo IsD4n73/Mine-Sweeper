@@ -72,11 +72,11 @@ class _GameScreenState extends State<GameScreen> {
             //! Banner time !\\
             InfoBanner(formatedTime(time: secondTime), Icons.timer),
             //! Game Grid !\\
-            Container(
-              width: double.infinity,
-              height: 400,
+            Padding(
               padding: const EdgeInsets.all(20),
               child: GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: MineSweeper.row,
                   crossAxisSpacing: 5,
@@ -87,9 +87,9 @@ class _GameScreenState extends State<GameScreen> {
                   Color cellColor = game.gameMap[index].reveal
                       ? AppColor.clickedCard
                       : AppColor.lightPrimary;
-
+            
                   return GestureDetector(
-                    onTap: game.gameOver
+                    onTap: game.gameOver || game.gameMap[index].reveal
                         ? null
                         : () {
                             setState(
@@ -101,7 +101,7 @@ class _GameScreenState extends State<GameScreen> {
                                       secondTime++;
                                     });
                                   });
-
+            
                                   isFirstMove = false;
                                 }
                                 game.clickCell(game.gameMap[index]);
@@ -109,7 +109,40 @@ class _GameScreenState extends State<GameScreen> {
                                   AudioPlayer()
                                       .play(AssetSource('sounds/click.wav'));
                                 }
-
+            
+                                if (game.gameOver) {
+                                  timer.cancel();
+                                  if (playAudio) {
+                                    AudioPlayer()
+                                        .play(AssetSource('sounds/lose.wav'));
+                                  }
+                                }
+                              },
+                            );
+                          },
+                    onLongPress: game.gameOver || game.gameMap[index].reveal
+                        ? null
+                        : () {
+                            setState(
+                              () {
+                                if (isFirstMove) {
+                                  timer = Timer.periodic(
+                                      const Duration(seconds: 1), (timer) {
+                                    setState(() {
+                                      secondTime++;
+                                    });
+                                  });
+            
+                                  isFirstMove = false;
+                                }
+            
+                                game.placeFlag(game.gameMap[index]);
+            
+                                if (playAudio) {
+                                  AudioPlayer()
+                                      .play(AssetSource('sounds/click.wav'));
+                                }
+            
                                 if (game.gameOver) {
                                   timer.cancel();
                                   if (playAudio) {
@@ -130,15 +163,17 @@ class _GameScreenState extends State<GameScreen> {
                       child: Center(
                         child: Text(
                           game.gameMap[index].reveal
-                              ? "${game.gameMap[index].content}"
+                              ? "${game.gameMap[index].content != "O" ? game.gameMap[index].content : "🚩"}"
                               : "",
                           style: TextStyle(
                             color: game.gameMap[index].reveal
                                 ? game.gameMap[index].content == "X"
                                     ? Colors.red
-                                    : AppColor.letterColors[
-                                        game.gameMap[index].content]
-                                : Colors.transparent,
+                                    : game.gameMap[index].content == "O"
+                                        ? Colors.lightGreen
+                                        : AppColor.letterColors[
+                                            game.gameMap[index].content]
+                                : Colors.yellow,
                             fontSize: 20,
                           ),
                         ),
@@ -151,7 +186,11 @@ class _GameScreenState extends State<GameScreen> {
 
             //! Commands !\\
             Text(
-              game.gameOver ? "You Lose" : "",
+              game.gameOver
+                  ? "You Lose"
+                  : game.gameWin
+                      ? "You Win!"
+                      : "",
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -172,6 +211,7 @@ class _GameScreenState extends State<GameScreen> {
                   timer.cancel();
 
                   game.resetGame();
+
                   game.gameOver = false;
                 });
               },

@@ -5,7 +5,10 @@ class MineSweeper {
   static int col = 10;
   static int mineCount = 10;
   int cells = row * col;
+  int remainCells = row * col;
+  int remainMine = 0;
   bool gameOver = false;
+  bool gameWin = false;
   List<Cell> gameMap = [];
 
   List<List<dynamic>> map = List.generate(
@@ -32,7 +35,12 @@ class MineSweeper {
     for (int i = 0; i < mineNumber; i++) {
       int mineRow = random.nextInt(row);
       int mineCol = random.nextInt(col);
-      map[mineRow][mineCol] = Cell(mineRow, mineCol, "X", false);
+      if (map[mineRow][mineCol].content != "X") {
+        map[mineRow][mineCol] = Cell(mineRow, mineCol, "X", false);
+        remainMine++;
+      } else {
+        i--;
+      }
     }
   }
 
@@ -46,6 +54,8 @@ class MineSweeper {
       ),
     );
     gameMap.clear();
+    gameWin = false;
+    remainCells = row * col;
     generateMap();
   }
 
@@ -60,6 +70,26 @@ class MineSweeper {
     }
   }
 
+  // Action Place Flag
+  void placeFlag(Cell cell) {
+    // not clicked on mine
+    if (cell.content != "X") {
+      showMine();
+      gameOver = true;
+    } else {
+      // place flag
+      cell.content = "O";
+      cell.reveal = true;
+      remainCells--;
+      remainMine--;
+    }
+
+    // check for win
+    if (remainCells <= 0 || remainMine <= 0) {
+      gameWin = true;
+    }
+  }
+
   // Action Click Cell
   void clickCell(Cell cell) {
     // clicked on mine
@@ -69,6 +99,7 @@ class MineSweeper {
     } else {
       //calculate the near mine
       int mineCount = 0;
+      remainCells--;
 
       for (int i = max(cell.row - 1, 0); i <= min(cell.row + 1, row - 1); i++) {
         // cell araund
@@ -98,6 +129,11 @@ class MineSweeper {
           }
         }
       }
+    }
+
+    // check for win
+    if (remainCells <= 0) {
+      gameWin = true;
     }
   }
 }

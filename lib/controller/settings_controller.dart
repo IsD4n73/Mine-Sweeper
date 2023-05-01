@@ -1,3 +1,4 @@
+import 'package:mine_sweeper/model/mine_game.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void saveGrid(int grid) async {
@@ -8,6 +9,9 @@ void saveGrid(int grid) async {
 
 Future<int> getGrid() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  MineSweeper.col = prefs.getInt('MS-grid') ?? 5;
+  MineSweeper.row = prefs.getInt('MS-grid') ?? 5;
 
   return prefs.getInt('MS-grid') ?? 5;
 }
