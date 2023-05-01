@@ -117,12 +117,12 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
                 activeColor: AppColor.accent,
                 checkColor: Colors.white,
-                
                 value: audio,
-                onChanged: (newValue) {
+                onChanged: (newValue) async {
                   setState(() {
                     audio = newValue!;
                   });
+                  saveAudio(newValue!);
                 },
               )
             ],
